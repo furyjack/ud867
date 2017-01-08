@@ -1,21 +1,44 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+
+import play.android.com.mylibrary.JokeTellingActivity;
 
 
 public class MainActivity extends AppCompatActivity {
+EndpointsAsyncTask manfred;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        manfred = new EndpointsAsyncTask();
+        manfred.setListner(new EndpointsAsyncTask.onPostExecuteCompleteListener() {
+            @Override
+            public void onPostExecuteComplete(String joke) {
+
+
+                Intent intent = new Intent(MainActivity.this, JokeTellingActivity.class);
+                intent.putExtra("joke", joke);
+                startActivity(intent);
+
+            }
+        });
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Toast.makeText(this, "derp", Toast.LENGTH_SHORT).show();
+        manfred.execute();
+
+
     }
 
 
