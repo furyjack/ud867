@@ -62,7 +62,7 @@ public class EndpointsAsyncTask extends AsyncTask<Void,Void,String> {
             listener.onPostExecuteComplete(s);
     }
 
-    interface onPostExecuteCompleteListener
+    public interface onPostExecuteCompleteListener
     {
         void onPostExecuteComplete(String joke);
 
